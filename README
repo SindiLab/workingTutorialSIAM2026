@@ -1,0 +1,25 @@
+05/27/2026
+
+Example 1 is going to be an MNIST type data set.
+
+We are going to learn about;
+* What CNNs are.
+* The language around them.
+* Key Learning Points:
+- Different layers (CNN) - perhaps why we do spatial stuff. 
+
+There are the 3 versus 8; I like the idea of doing this to show them what is going on. 
+
+We want to get to the Grad-CAM - this is the class activation map 
+
+The lung example can be a 2nd one for people who are feeling fancy; 
+
+The key here is that we want to see that there are regions of the lungs that are importna.
+
+Things to change:
+* Do the same NN for both. (It's a little funny that this is different)
+* Find a nice visual way to represent the network
+* Clean up the presentation...
+* Can I find a way to download locally the lung data to keep from having to install something else. (Introduce Biological MNIST)
+
+
