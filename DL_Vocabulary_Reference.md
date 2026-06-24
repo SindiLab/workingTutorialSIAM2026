@@ -3,6 +3,18 @@
 
 ---
 
+## Guiding Principles
+
+By the end of this section, you should be able to:
+
+- **Speak the language.** Become conversant in the core vocabulary of deep learning — layers, loss functions, activation functions, gradient descent, overfitting — well enough to read papers and follow talks in the field.
+
+- **Understand the interpretability spectrum.** Recognize that "black box" is not an inevitable property of deep learning, and be able to distinguish three strategies for recovering interpretability: inspecting the architecture, explaining predictions post-hoc, and embedding biological structure directly into training.
+
+- **See where deep learning meets mechanistic modeling.** Understand how known biological structure (an ODE, a conservation law, a rate equation) can be encoded as a constraint on a neural network, and what this buys you over classical parameter fitting.
+
+---
+
 ## Core Building Blocks
 
 **Neuron**
