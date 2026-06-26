@@ -1,0 +1,106 @@
+<svg viewBox="0 0 760 458" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif" role="img">
+  <title>BINN Architecture — Biologically-Informed Neural Network for Lotka-Volterra</title>
+  <desc>Input time t feeds through 3 hidden Dense layers and a linear output to produce x-hat and y-hat. GradientTape computes derivatives w.r.t. t. Learnable bio parameters alpha, beta, gamma, delta combine with derivatives to form an LV residual. Three losses (data, bio, IC) sum into a total loss, updated via Adam for both network weights and bio parameters.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#666"/></marker>
+    <marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#70AD47"/></marker>
+    <marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#ED7D31"/></marker>
+    <marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#C55A11"/></marker>
+  </defs>
+  <!-- SECTION 1: NEURAL NETWORK -->
+  <rect x="4" y="6" width="500" height="152" rx="7" fill="#EEF4FF" stroke="#4472C4" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="14" y="21" font-size="8.5" fill="#4472C4" font-weight="bold">NEURAL NETWORK  N_θ(t)</text>
+  <circle cx="36" cy="86" r="21" fill="#555"/>
+  <text x="36" y="83" text-anchor="middle" fill="white" font-size="15" font-weight="bold">t</text>
+  <text x="36" y="97" text-anchor="middle" fill="#ccc" font-size="7">scalar</text>
+  <text x="36" y="132" text-anchor="middle" fill="#666" font-size="8">input time</text>
+  <line x1="57" y1="86" x2="74" y2="86" stroke="#666" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="76" y="26" width="68" height="118" rx="4" fill="#4472C4"/>
+  <text x="110" y="74" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Dense</text>
+  <text x="110" y="90" text-anchor="middle" fill="white" font-size="13" font-weight="bold">32</text>
+  <text x="110" y="107" text-anchor="middle" fill="#BDD7EE" font-size="9">tanh</text>
+  <text x="110" y="134" text-anchor="middle" fill="#BDD7EE" font-size="7">layer 1</text>
+  <line x1="144" y1="86" x2="161" y2="86" stroke="#666" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="163" y="26" width="68" height="118" rx="4" fill="#4472C4"/>
+  <text x="197" y="74" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Dense</text>
+  <text x="197" y="90" text-anchor="middle" fill="white" font-size="13" font-weight="bold">32</text>
+  <text x="197" y="107" text-anchor="middle" fill="#BDD7EE" font-size="9">tanh</text>
+  <text x="197" y="134" text-anchor="middle" fill="#BDD7EE" font-size="7">layer 2</text>
+  <line x1="231" y1="86" x2="248" y2="86" stroke="#666" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="250" y="26" width="68" height="118" rx="4" fill="#4472C4"/>
+  <text x="284" y="74" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Dense</text>
+  <text x="284" y="90" text-anchor="middle" fill="white" font-size="13" font-weight="bold">32</text>
+  <text x="284" y="107" text-anchor="middle" fill="#BDD7EE" font-size="9">tanh</text>
+  <text x="284" y="134" text-anchor="middle" fill="#BDD7EE" font-size="7">layer 3</text>
+  <line x1="318" y1="86" x2="335" y2="86" stroke="#666" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="337" y="42" width="60" height="88" rx="4" fill="#2E75B6"/>
+  <text x="367" y="80" text-anchor="middle" fill="white" font-size="10" font-weight="bold">Dense</text>
+  <text x="367" y="96" text-anchor="middle" fill="white" font-size="13" font-weight="bold">2</text>
+  <text x="367" y="113" text-anchor="middle" fill="#BDD7EE" font-size="8">linear</text>
+  <line x1="397" y1="86" x2="414" y2="86" stroke="#666" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="416" y="46" width="78" height="80" rx="5" fill="#70AD47"/>
+  <text x="455" y="80" text-anchor="middle" fill="white" font-size="13" font-weight="bold">x̂(t)</text>
+  <text x="455" y="100" text-anchor="middle" fill="white" font-size="13" font-weight="bold">ŷ(t)</text>
+  <text x="455" y="142" text-anchor="middle" fill="#555" font-size="8">predictions</text>
+  <!-- SECTION 2: BIO PARAMETERS -->
+  <rect x="518" y="6" width="128" height="152" rx="6" fill="#FFF6E5" stroke="#ED7D31" stroke-width="1.5"/>
+  <text x="582" y="23" text-anchor="middle" fill="#ED7D31" font-size="8.5" font-weight="bold">BIO PARAMETERS</text>
+  <text x="582" y="40" text-anchor="middle" fill="#555" font-size="9">log α,  log β</text>
+  <text x="582" y="56" text-anchor="middle" fill="#555" font-size="9">log γ,  log δ</text>
+  <text x="582" y="70" text-anchor="middle" fill="#AAA" font-size="7.5">tf.keras.Variable</text>
+  <line x1="528" y1="76" x2="636" y2="76" stroke="#ED7D31" stroke-width="0.8" stroke-dasharray="3"/>
+  <text x="582" y="91" text-anchor="middle" fill="#888" font-size="10">↓  exp( )</text>
+  <text x="582" y="113" text-anchor="middle" fill="#ED7D31" font-size="16" font-weight="bold">α β γ δ</text>
+  <text x="582" y="131" text-anchor="middle" fill="#AAA" font-size="7">always positive</text>
+  <text x="582" y="144" text-anchor="middle" fill="#AAA" font-size="7">init: all = 0.5</text>
+  <!-- SECTION 3: GRADIENTTAPE + RESIDUALS -->
+  <rect x="4" y="168" width="500" height="100" rx="6" fill="#E6F3FB" stroke="#2E75B6" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="14" y="183" font-size="8.5" fill="#2E75B6" font-weight="bold">tf.GradientTape — computes d/dt[N_θ(t)] exactly, via backprop through the network</text>
+  <rect x="18" y="191" width="100" height="60" rx="4" fill="#2E75B6"/>
+  <text x="68" y="212" text-anchor="middle" fill="white" font-size="9.5">d x̂(t) / dt</text>
+  <text x="68" y="230" text-anchor="middle" fill="#BDD7EE" font-size="8">exact chain rule</text>
+  <text x="68" y="243" text-anchor="middle" fill="#BDD7EE" font-size="8">no finite differences</text>
+  <rect x="135" y="191" width="100" height="60" rx="4" fill="#2E75B6"/>
+  <text x="185" y="212" text-anchor="middle" fill="white" font-size="9.5">d ŷ(t) / dt</text>
+  <text x="185" y="230" text-anchor="middle" fill="#BDD7EE" font-size="8">exact chain rule</text>
+  <text x="185" y="243" text-anchor="middle" fill="#BDD7EE" font-size="8">no finite differences</text>
+  <line x1="118" y1="221" x2="131" y2="221" stroke="#2E75B6" stroke-width="1.5" marker-end="url(#ah)"/>
+  <rect x="252" y="183" width="245" height="76" rx="4" fill="white" stroke="#AAA" stroke-width="1"/>
+  <text x="375" y="200" text-anchor="middle" fill="#333" font-size="9" font-weight="bold">Lotka-Volterra residual</text>
+  <text x="375" y="218" text-anchor="middle" fill="#555" font-size="8.5">r_x = dx̂/dt − ( α x̂ − β x̂ŷ )</text>
+  <text x="375" y="236" text-anchor="middle" fill="#555" font-size="8.5">r_y = dŷ/dt − ( γ x̂ŷ − δ ŷ )</text>
+  <text x="375" y="252" text-anchor="middle" fill="#AAA" font-size="7.5">≈ 0  if the ODE is satisfied</text>
+  <line x1="235" y1="221" x2="249" y2="221" stroke="#2E75B6" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="518" y1="110" x2="492" y2="218" stroke="#ED7D31" stroke-width="1.5" marker-end="url(#ah-orange)"/>
+  <line x1="455" y1="126" x2="290" y2="183" stroke="#70AD47" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#ah-green)"/>
+  <!-- SECTION 4: THREE LOSSES -->
+  <rect x="18" y="286" width="148" height="62" rx="5" fill="#C55A11"/>
+  <text x="92" y="309" text-anchor="middle" fill="white" font-size="10" font-weight="bold">&#x1D4DB; data</text>
+  <text x="92" y="326" text-anchor="middle" fill="#FFD" font-size="8">MSE( x̂,ŷ vs x,y obs )</text>
+  <text x="92" y="341" text-anchor="middle" fill="#FFD" font-size="7.5">fit the noisy measurements</text>
+  <rect x="183" y="286" width="148" height="62" rx="5" fill="#C55A11"/>
+  <text x="257" y="309" text-anchor="middle" fill="white" font-size="10" font-weight="bold">&#x1D4DB; bio</text>
+  <text x="257" y="326" text-anchor="middle" fill="#FFD" font-size="8">MSE( r_x&#xB2; + r_y&#xB2; )</text>
+  <text x="257" y="341" text-anchor="middle" fill="#FFD" font-size="7.5">satisfy the LV equations</text>
+  <rect x="348" y="286" width="148" height="62" rx="5" fill="#C55A11"/>
+  <text x="422" y="309" text-anchor="middle" fill="white" font-size="10" font-weight="bold">&#x1D4DB; ic</text>
+  <text x="422" y="326" text-anchor="middle" fill="#FFD" font-size="8">MSE( (x̂(0),ŷ(0)) vs (x&#x2080;,y&#x2080;) )</text>
+  <text x="422" y="341" text-anchor="middle" fill="#FFD" font-size="7.5">pin known initial condition</text>
+  <line x1="425" y1="120" x2="145" y2="286" stroke="#70AD47" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#ah-green)"/>
+  <line x1="375" y1="259" x2="280" y2="284" stroke="#888" stroke-width="1.3" marker-end="url(#ah)"/>
+  <line x1="92"  y1="348" x2="228" y2="384" stroke="#C55A11" stroke-width="1.4" marker-end="url(#ah-red)"/>
+  <line x1="257" y1="348" x2="257" y2="384" stroke="#C55A11" stroke-width="1.4" marker-end="url(#ah-red)"/>
+  <line x1="422" y1="348" x2="285" y2="384" stroke="#C55A11" stroke-width="1.4" marker-end="url(#ah-red)"/>
+  <!-- SECTION 5: TOTAL LOSS + UPDATE -->
+  <rect x="95" y="386" width="324" height="50" rx="5" fill="#7030A0"/>
+  <text x="257" y="406" text-anchor="middle" fill="white" font-size="10" font-weight="bold">&#x1D4DB; total = &#x1D4DB; data + &#x03BB;_bio &#xB7; &#x1D4DB; bio + &#x03BB;_ic &#xB7; &#x1D4DB; ic</text>
+  <text x="257" y="425" text-anchor="middle" fill="#DDD" font-size="8">Adam &#x2192; updates BOTH  &#x03B8; (network)  and  {log &#x03B1;, log &#x03B2;, log &#x03B3;, log &#x03B4;}</text>
+  <!-- Two-phase note -->
+  <rect x="524" y="286" width="126" height="62" rx="5" fill="#F2F2F2" stroke="#CCC" stroke-width="1"/>
+  <text x="587" y="304" text-anchor="middle" fill="#555" font-size="8.5" font-weight="bold">Two-phase training</text>
+  <text x="587" y="320" text-anchor="middle" fill="#777" font-size="8">Phase 1: &#x03BB;_bio = 0</text>
+  <text x="587" y="334" text-anchor="middle" fill="#777" font-size="8">network fits data shape</text>
+  <rect x="524" y="356" width="126" height="36" rx="5" fill="#F2F2F2" stroke="#CCC" stroke-width="1"/>
+  <text x="587" y="372" text-anchor="middle" fill="#777" font-size="8">Phase 2: &#x03BB;_bio &gt; 0</text>
+  <text x="587" y="385" text-anchor="middle" fill="#ED7D31" font-size="8" font-weight="bold">&#x2192; read off &#x03B1;, &#x03B2;, &#x03B3;, &#x03B4;</text>
+</svg>
